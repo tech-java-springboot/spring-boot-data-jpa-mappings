@@ -54,7 +54,7 @@ public class Person implements Serializable {
 	@NonNull
 	private String presonAddrs;
 	
-	@OneToMany(targetEntity = IdCard.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(targetEntity = IdCard.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "person_fk", referencedColumnName = "id")
 	@NonNull
 	private Set<IdCard> idCards;

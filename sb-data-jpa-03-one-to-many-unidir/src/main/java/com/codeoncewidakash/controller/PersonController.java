@@ -3,6 +3,7 @@ package com.codeoncewidakash.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codeoncewidakash.entity.Person;
+import com.codeoncewidakash.exception.CardDetailsNotFoundException;
 import com.codeoncewidakash.exception.PersonNotFoundException;
 import com.codeoncewidakash.service.IPersonService;
 
@@ -35,5 +37,18 @@ public class PersonController {
 			throw pnfe;
 		}
 		return new ResponseEntity<>(fetchPersonDetails, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete/card/{personId}/{cardId}")
+	public ResponseEntity<String> deleteCardDetails(@PathVariable("personId") Long personId, @PathVariable("cardId") Long cardId){
+		String response;
+		try {
+			response = personService.deleteOneOfTheCardDetailFromCollectionOfCardIdAssociateWithPerson(personId, cardId);
+		} catch (PersonNotFoundException pnfe) {
+			throw pnfe;
+		} catch (CardDetailsNotFoundException cdnfe) {
+			throw cdnfe;
+		}
+		return ResponseEntity.ok(response);
 	}
 }
