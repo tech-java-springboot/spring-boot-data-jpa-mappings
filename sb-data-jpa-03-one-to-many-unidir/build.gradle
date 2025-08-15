@@ -2,10 +2,51 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
+	
+	//You're using the publishing block without applying the maven-publish plugin, 
+	//which is required to use the publishing DSL (like publications and repositories).
+	//You need to apply the maven-publish plugin at the top of your build.gradle file.
+	id 'maven-publish'
 }
 
 group = 'com.codeoncewidakash'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			
+			//To publish a fully resolved POM file (with actual version numbers for dependencies),
+			//add this block to publish resolved dependencies
+			versionMapping {
+				usage('java-api') {
+					fromResolutionResult()
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
+			
+		}
+	}
+	repositories {
+		maven {
+			def releasesRepoUrl = uri("http://13.232.220.193:8081/repository/codeonce-release-repo/")
+			def snapshotsRepoUrl = uri("http://13.232.220.193:8081/repository/codeonce-snapshot-repo/")
+			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+			
+			//This is because Gradle 8.x blocks HTTP (non-HTTPS) URLs by default when publishing artifacts, 
+			//unless you explicitly allow insecure protocols.
+			allowInsecureProtocol = true // <-- Add this line to allow insecure protocols. 
+			
+			credentials {
+				username = findProperty("nexusUsername")
+				password = findProperty("nexusPassword")
+			}
+		}
+	}
+}
 
 java {
 	toolchain {
