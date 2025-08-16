@@ -7,11 +7,19 @@ plugins {
 	//which is required to use the publishing DSL (like publications and repositories).
 	//You need to apply the maven-publish plugin at the top of your build.gradle file.
 	id 'maven-publish'
+	
+	//sonar plugin
+	id "org.sonarqube" version "4.4.1.3373" 
 }
 
 group = 'com.codeoncewidakash'
 version = '0.0.1'
 
+repositories {
+	mavenCentral()
+}
+
+//Nexus config
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -48,6 +56,7 @@ publishing {
 	}
 }
 
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
@@ -60,10 +69,6 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -72,6 +77,17 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+//we have added the URL and Token details inside gradle.properties file 
+//here we have only project-specific Sonar settings
+sonarqube {
+    properties {
+        property "sonar.projectKey", "sb-data-jpa-02-blob-clob-file-upload-download"
+        property "sonar.projectName", "SB Gradle App With OneToMany Association Mapping"
+        property "sonar.projectVersion", version
+        property "sonar.sourceEncoding", "UTF-8"
+    }
 }
 
 tasks.named('test') {

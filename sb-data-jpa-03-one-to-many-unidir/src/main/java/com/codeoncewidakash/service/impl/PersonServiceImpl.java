@@ -17,7 +17,7 @@ public class PersonServiceImpl implements IPersonService {
 	
 	@Override
 	public String registerPersonDetails(Person person) {
-		Person registeredPerson = personRepository.save(person);
+		var registeredPerson = personRepository.save(person);
 		return new StringBuilder("Person registered with id ").append(registeredPerson.getPersonId()).toString();
 	}
 	
@@ -28,7 +28,7 @@ public class PersonServiceImpl implements IPersonService {
 	
 	@Override
 	public String deleteOneOfTheCardDetailFromCollectionOfCardIdAssociateWithPerson(Long personId, Long cardId) {
-		Person person = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException("Person Not Found With Id: "+ personId));
+		var person = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException("Person Not Found With Id: "+ personId));
 		if(person.getIdCards().removeIf(c -> c.getId().equals(cardId)))
 			personRepository.save(person);
 		else 

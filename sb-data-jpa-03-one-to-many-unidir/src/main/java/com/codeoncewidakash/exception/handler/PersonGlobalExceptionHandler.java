@@ -13,16 +13,16 @@ public class PersonGlobalExceptionHandler {
 	
 	@ExceptionHandler(exception = PersonNotFoundException.class)
 	public ResponseEntity<String> handlePersonNotFoundException(PersonNotFoundException pnfe){
-		return new ResponseEntity<String>(pnfe.getMessage(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(pnfe.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(exception = CardDetailsNotFoundException.class)
 	public ResponseEntity<String> handleCardDetailsNotFoundException(CardDetailsNotFoundException cdnfe){
-		return new ResponseEntity<String>(cdnfe.getMessage(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(cdnfe.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(exception = Exception.class)
 	public ResponseEntity<String> handleOtherExceptions(Exception e){
-		return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

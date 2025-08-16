@@ -1,10 +1,7 @@
 package com.codeoncewidakash.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Set;
-
-import org.hibernate.annotations.Type;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

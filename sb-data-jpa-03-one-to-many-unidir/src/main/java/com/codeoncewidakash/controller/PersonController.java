@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codeoncewidakash.entity.Person;
-import com.codeoncewidakash.exception.CardDetailsNotFoundException;
-import com.codeoncewidakash.exception.PersonNotFoundException;
 import com.codeoncewidakash.service.IPersonService;
 
 @RestController
@@ -30,25 +28,11 @@ public class PersonController {
 
 	@GetMapping("/fetch/{id}")
 	public ResponseEntity<Person> fetchPersonDetails(@PathVariable("id") Long id) {
-		Person fetchPersonDetails;
-		try {
-			fetchPersonDetails = personService.fetchPersonDetails(id);
-		} catch (PersonNotFoundException pnfe) {
-			throw pnfe;
-		}
-		return new ResponseEntity<>(fetchPersonDetails, HttpStatus.OK);
+		return new ResponseEntity<>(personService.fetchPersonDetails(id), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/card/{personId}/{cardId}")
 	public ResponseEntity<String> deleteCardDetails(@PathVariable("personId") Long personId, @PathVariable("cardId") Long cardId){
-		String response;
-		try {
-			response = personService.deleteOneOfTheCardDetailFromCollectionOfCardIdAssociateWithPerson(personId, cardId);
-		} catch (PersonNotFoundException pnfe) {
-			throw pnfe;
-		} catch (CardDetailsNotFoundException cdnfe) {
-			throw cdnfe;
-		}
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok(personService.deleteOneOfTheCardDetailFromCollectionOfCardIdAssociateWithPerson(personId, cardId));
 	}
 }
