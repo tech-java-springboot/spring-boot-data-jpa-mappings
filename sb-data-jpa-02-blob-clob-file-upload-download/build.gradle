@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
+	//sonar plugin
+	id "org.sonarqube" version "4.4.1.3373" 
 }
 
 group = 'com.codeoncewidakash'
@@ -32,6 +34,18 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+//we have added the URL and Token details inside gradle.properties file 
+//here we have only project-specific Sonar settings
+sonarqube {
+    properties {
+        property "sonar.projectKey", "sb-data-jpa-02-blob-clob-file-upload-download"
+        property "sonar.projectName", "Spring Boot Gradle App To Upload And Download Files"
+        property "sonar.projectVersion", version
+        property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
