@@ -1,11 +1,14 @@
 package com.codeoncewidakash.exception.handler;
 
+import javax.management.relation.RoleInfoNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.codeoncewidakash.exception.CustomerNotFoundException;
+import com.codeoncewidakash.exception.UserNotExistException;
 import com.codeoncewidakash.exception.WishlistItemNotFoundException;
 
 @RestControllerAdvice
@@ -21,4 +24,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(wnf.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(exception = RoleInfoNotFoundException.class)
+	public ResponseEntity<String> handleRoleInfoNotFoundException(RoleInfoNotFoundException rnf){
+		return new ResponseEntity<>(rnf.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(exception = UserNotExistException.class)
+	public ResponseEntity<String> handleUserNotExistException(UserNotExistException unf){
+		return new ResponseEntity<>(unf.getMessage(), HttpStatus.NOT_FOUND);
+	}
 }

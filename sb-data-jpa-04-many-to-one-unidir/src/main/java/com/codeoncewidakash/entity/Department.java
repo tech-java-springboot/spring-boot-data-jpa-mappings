@@ -1,7 +1,5 @@
 package com.codeoncewidakash.entity;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,30 +18,28 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "wishlist08_tab")
+@Table(name="department08_tab")
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
-public class WishlistItem implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Department {
 	
 	@Id
-	@GeneratedValue(generator = "gen3", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "gen3", sequenceName = "whislist_seq_08", initialValue = 100, allocationSize = 1)
-	@Column(name = "wishlist_id")
-	private Long id;
+	@GeneratedValue(generator = "gen2", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "gen2", sequenceName = "dept_seq_08", initialValue = 500, allocationSize = 1)
+	@Column(name = "id")
+	private Long deptId;
 	
 	@NonNull
-	@Column(name = "producet_code", length = 20)
+	@Column(name = "name", length = 20)
 	@EqualsAndHashCode.Include
-	private String productCode;
+	private String deptName;
 	
-	@NonNull
-	@Column(name = "product_name", length = 20)
-	private String productName;
+	@Column(name = "status")
+	private Boolean isActive;
 }

@@ -37,7 +37,7 @@ public class CartItem implements Serializable {
 	
 	@Id
 	@GeneratedValue(generator = "gen4", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "gen4", sequenceName = "cartitem_seq_08", allocationSize = 700, initialValue = 1)
+	@SequenceGenerator(name = "gen4", sequenceName = "cartitem_seq_08", initialValue = 600, allocationSize = 1)
 	@Column(name = "cartitem_id")
 	private Long id;
 	
