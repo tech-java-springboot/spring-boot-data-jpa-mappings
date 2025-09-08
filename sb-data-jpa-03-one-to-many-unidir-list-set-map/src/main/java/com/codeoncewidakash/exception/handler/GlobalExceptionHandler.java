@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.codeoncewidakash.exception.CustomerNotFoundException;
+import com.codeoncewidakash.exception.AccessJwtTokenExpiredException;
 import com.codeoncewidakash.exception.UserNotExistException;
 import com.codeoncewidakash.exception.WishlistItemNotFoundException;
 
@@ -33,4 +34,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleUserNotExistException(UserNotExistException unf){
 		return new ResponseEntity<>(unf.getMessage(), HttpStatus.NOT_FOUND);
 	}
+	
+	/*@ExceptionHandler(exception = JwtTokenExpiredException.class)
+	public ResponseEntity<String> handleJwtTokenExpiredException(JwtTokenExpiredException jtee){
+		return new ResponseEntity<>(jtee.getMessage(), HttpStatus.NOT_FOUND);
+	}*/
 }

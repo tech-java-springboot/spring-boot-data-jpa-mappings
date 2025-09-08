@@ -8,6 +8,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import com.codeoncewidakash.exception.AccessJwtTokenExpiredException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,6 +35,9 @@ public class InvalidUserAuthenticationEntryPoint implements AuthenticationEntryP
 	    // Trying to access a protected end point without authentication
 	    else if (authException instanceof InsufficientAuthenticationException) {
 	        message = "Authentication is required to access this resource!";
+	    }
+	    else if(authException instanceof AccessJwtTokenExpiredException) {
+	    	message = "Your JWT token is expired!";
 	    }
 	    // Default for any other authentication error
 	    else {
