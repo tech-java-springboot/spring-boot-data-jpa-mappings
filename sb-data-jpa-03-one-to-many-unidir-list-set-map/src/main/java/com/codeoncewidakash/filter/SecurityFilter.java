@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.codeoncewidakash.exception.AccessJwtTokenExpiredException;
+import com.codeoncewidakash.exception.ExpiredJwtTokenException;
 import com.codeoncewidakash.util.JwtUtil;
 
 import jakarta.servlet.FilterChain;
@@ -55,7 +55,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 			if (token != null && jwtUtil.isTokenExpired(token)) {
 				// Clear any existing authentication from the security context to ensure the expired token does not grant access.
 				SecurityContextHolder.clearContext(); 
-				throw new AccessJwtTokenExpiredException("Your JWT token is expired!");
+				throw new ExpiredJwtTokenException("Your JWT token is expired!");
 			}
 
 			if (token != null) {
@@ -63,28 +63,28 @@ public class SecurityFilter extends OncePerRequestFilter {
 				// 4. validate and read subject from token
 				username = jwtUtil.getUsername(token);
 
-				// 6. check user details
+				// 5. check user details
 				if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-					// 7. load user from DB
+					// 6. load user from DB
 					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 					
-					// 8. Create an authentication object containing the user’s identity and granted authorities.
+					// 7. Create an authentication object containing the user’s identity and granted authorities.
 					// That means this user is now authenticated, trust them for the rest of the request
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());
 					
-					// 9. Attach additional request details (IP, session ID) to the authentication object
+					// 8. Attach additional request details (IP, session ID) to the authentication object
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					
-					// 10. Store the authentication object in the SecurityContext so Spring Security treats the user as authenticated
+					// 9. Store the authentication object in the SecurityContext so Spring Security treats the user as authenticated
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 				}
 			}
 
 			filterChain.doFilter(request, response);
 
-		} catch (AccessJwtTokenExpiredException jtee) {
+		} catch (ExpiredJwtTokenException jtee) {
 			authenticationEntryPoint.commence(request, response, jtee);
 		}
 	}

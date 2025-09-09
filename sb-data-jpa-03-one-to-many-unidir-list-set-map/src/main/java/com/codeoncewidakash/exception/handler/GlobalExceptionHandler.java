@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.codeoncewidakash.exception.CustomerNotFoundException;
-import com.codeoncewidakash.exception.AccessJwtTokenExpiredException;
+import com.codeoncewidakash.exception.ExpiredJwtTokenException;
 import com.codeoncewidakash.exception.UserNotExistException;
 import com.codeoncewidakash.exception.WishlistItemNotFoundException;
 

@@ -20,6 +20,12 @@ public class JwtUtil {
 	@Value("${app.secret}")
 	private String secret;
 	
+	// Access token 15m
+	private static final long ACCESS_TOKEN_VALIDITY = TimeUnit.MINUTES.toMillis(3);
+	
+	// Refresh token 7 days
+	private static final long REFRESH_TOKEN_VALIDITY = TimeUnit.DAYS.toMillis(7);
+	
 	public boolean isTokenExpired(String token) {
 		try {
 			Date tokenExpiration = getClaims(token).getExpiration();
@@ -43,18 +49,23 @@ public class JwtUtil {
 				.getBody();
 	}
 	
-	public String generateToken(String subject) {
+	public String generateAccessToken(String subject) {
 		Map<String, Object> claims = new HashMap<>();
-		return generateToken(claims, subject);
+		return generateToken(claims, subject, ACCESS_TOKEN_VALIDITY);
 	}
 	
-	private String generateToken(Map<String, Object> claims, String subject) {
+	public String generateRefreshToken(String subject) {
+		Map<String, Object> claims = new HashMap<>();
+		return generateToken(claims, subject, REFRESH_TOKEN_VALIDITY);
+	}
+	
+	private String generateToken(Map<String, Object> claims, String subject, long valididty) {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setSubject(subject)
 				.setIssuer("ECOMAPP")
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)))
+				.setExpiration(new Date(System.currentTimeMillis() + valididty))
 				//.signWith(SignatureAlgorithm.HS256, secret.getBytes()) - deprecated use below implementation
 				.signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
 				.compact();

@@ -2,14 +2,14 @@ package com.codeoncewidakash.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
-public class AccessJwtTokenExpiredException extends AuthenticationException {
+public class ExpiredJwtTokenException extends AuthenticationException {
 	private static final long serialVersionUID = 1L;
 	
-	public AccessJwtTokenExpiredException(String message) {
+	public ExpiredJwtTokenException(String message) {
 		super(message);
 	}
 	
-	public AccessJwtTokenExpiredException(String msg, Throwable cause) {
+	public ExpiredJwtTokenException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 }
