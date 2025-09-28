@@ -1,5 +1,7 @@
 package com.codeoncewidakash.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name="department08_tab")
@@ -24,9 +25,9 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Department {
 	
 	@Id

@@ -34,7 +34,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Setter
 @Getter
-@ToString
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Employee {
@@ -52,7 +51,7 @@ public class Employee {
 	@NonNull
 	private String empDesg;
 	
-	@Column(name = "email", length = 20)
+	@Column(name = "email", length = 60)
 	@NonNull
 	@EqualsAndHashCode.Include
 	private String empEmail;
@@ -73,7 +72,7 @@ public class Employee {
 	@UpdateTimestamp
 	private LocalDate updatedOn;
 	
-	@ManyToOne(targetEntity = Department.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Department.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dept_id_fk", referencedColumnName = "id")
 	private Department department;
 	
